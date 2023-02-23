@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="header"></div>
+        <div class="hover-hero-wrapper">
+            <div class="hover-hero-video">
+                <video src="https://peldonrose.com/assets/hero-final-video-compressed-v2.mp4" type="video/mp4" autoplay="" loop="" muted="" playsinline=""></video>
+            </div>
+        </div>
+        <div class="target-container"></div>
+        <script>
+            window.onscroll = function () {
+                resizeAndPositionVideo()
+            }
+
+            function resizeAndPositionVideo() {
+                const videoContainer = document.querySelector('.hover-hero-video')
+                const targetContainer = document.querySelector('.target-container')
+
+                // calculate the distance between the video and target container
+                const distanceBetweenContainers = ((targetContainer.offsetTop - window.pageYOffset) + videoContainer.clientHeight)
+
+                if (videoContainer.offsetTop <= distanceBetweenContainers) {
+
+                    // move the video container down the page until it fits in the target container
+                    videoContainer.style.top = `${window.pageYOffset}px`
+                }
+
+                const videoContainerWidth = videoContainer.offsetWidth
+                const targetContainerWidth = targetContainer.offsetWidth
+
+                if (videoContainerWidth >= targetContainerWidth) {
+                    const differenceBetweenTargetAndPageGap = (window.innerWidth - targetContainer.offsetWidth)
+                    const numberOfPixelsBeforeVideoReachesTarget = (targetContainer.offsetTop - window.pageYOffset)
+                    const numberToReduceVideoWidthBy = (differenceBetweenTargetAndPageGap / numberOfPixelsBeforeVideoReachesTarget)
+
+                    if (isScrollingDown()) {
+                        videoContainer.style.width = (videoContainerWidth - numberToReduceVideoWidthBy * calculateScrollSpeed()) + 'px'
+                    } else {
+                        // @todo increase width
+                    }
+                }
+            }
+
+            function getPercentage(partialValue, totalValue) {
+                return (100 * partialValue) / totalValue
+            }
+
+            
+            let previousScrollPosition = 0
+            function isScrollingDown() {
+                let goingDown = false
+                let scrollPosition = window.pageYOffset
+                
+                if (scrollPosition > previousScrollPosition) {
+                    goingDown = true
+                }
+
+                previousScrollPosition = scrollPosition
+
+                return goingDown
+            }
+
+            const calculateScrollSpeed = (function () {
+                let lastPos, newPos, timer, delta, delay = 50
+
+                function clear() {
+                    lastPos = null
+                    delta = 0
+                }
+
+                clear()
+
+                return function () {
+                    newPos = window.scrollY
+                    if (lastPos != null) {
+                        delta = newPos - lastPos
+                    }
+                    lastPos = newPos
+
+                    clearTimeout(timer)
+
+                    timer = setTimeout(clear, delay)
+
+                    return delta
+                }
+            }())
+        </script>
+    </body>
+</html>

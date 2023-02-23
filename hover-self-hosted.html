@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="header"></div>
+        <div class="hover-hero-wrapper">
+            <div class="hover-hero-video">
+                <video src="https://peldonrose.com/assets/hero-final-video-compressed-v2.mp4" type="video/mp4" autoplay="" loop="" muted="" playsinline=""></video>
+            </div>
+            <div class="hover-hero">
+                <div class="hover-hero-item" data-video-start="0">
+                    <div>
+                        <h2>Workplace Strategy</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc aliquet a purus sollicitudin tincidunt.</p>
+                        <button>Learn more</button>
+                    </div>
+                </div>
+                <div class="hover-hero-item" data-video-start="9">
+                    <div>
+                        <h2>Design</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc aliquet a purus sollicitudin tincidunt.</p>
+                        <button>Learn more</button>
+                    </div>
+                </div>
+                <div class="hover-hero-item" data-video-start="22">
+                    <div>
+                        <h2>Build</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc aliquet a purus sollicitudin tincidunt.</p>
+                        <button>Learn more</button>
+                    </div>
+                </div>
+                <div class="hover-hero-item" data-video-start="30">
+                    <div>
+                        <h2>Everyday Services</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc aliquet a purus sollicitudin tincidunt.</p>
+                        <button>Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const player = document.getElementsByTagName('video')[0]
+
+            const heroHoverItems = document.querySelectorAll('.hover-hero-item')
+            heroHoverItems.forEach(item => item.addEventListener('mouseenter', updateBackgroundVideo))
+
+            function updateBackgroundVideo(event) {
+                const videoStart = event.target.getAttribute('data-video-start')
+                if (videoStart) {
+                    player.currentTime = videoStart.split(':').reduce((acc, time) => (60 * acc) + +time)
+                }
+            }
+        </script>
+    </body>
+</html>
